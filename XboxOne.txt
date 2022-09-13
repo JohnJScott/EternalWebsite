@@ -1,0 +1,16 @@
+
+  <Choose>
+    <When Condition="Exists('Platform\XboxOne\UEBuildXboxOne.cs')">
+      <ItemGroup>
+        <Compile Include="Platform\XboxOne\UEBuildXboxOne.cs" />
+        <Compile Include="Platform\XboxOne\XboxOneToolChain.cs" />
+        <Compile Include="Platform\XboxOne\XboxOneDeploy.cs" />
+        <Compile Include="Platform\XboxOne\XboxOneExports.cs" />
+        <Compile Include="Platform\XboxOne\XboxOneProjectGenerator.cs" />
+        <Compile Include="Platform\XboxOne\XboxOneManifestGenerator.cs" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  
+  
+  
