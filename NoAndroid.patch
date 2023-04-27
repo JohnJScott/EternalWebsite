@@ -1,0 +1,139 @@
+diff -r \Engine\Plugins\VirtualProduction\MultiUserTakes\Source\ConcertTakeRecorder\Private\ConcertTakeRecorderClientSessionCustomization#3.cpp \Engine\Plugins\VirtualProduction\MultiUserTakes\Source\ConcertTakeRecorder\Private\ConcertTakeRecorderClientSessionCustomization@=360.cpp
+19c19,21
+< #include "Oculus/LibOVRPlatform/LibOVRPlatform/include/OVR_LaunchBlockFlowResult.h"
+---
+> // ETERNAL BEGIN
+> //#include "Oculus/LibOVRPlatform/LibOVRPlatform/include/OVR_LaunchBlockFlowResult.h"
+> // ETERNAL END
+
+diff -r \Engine\Source\Editor\PIEPreviewDeviceProfileSelector\Private\PIEPreviewDevice#3.cpp \Engine\Source\Editor\PIEPreviewDeviceProfileSelector\Private\PIEPreviewDevice@=360.cpp
+12c12,14
+< #include "Android/AndroidWindowUtils.h"
+---
+> // ETERNAL BEGIN
+> //#include "Android/AndroidWindowUtils.h"
+> // ETERNAL END
+151c153,155
+< 				AndroidWindowUtils::ApplyContentScaleFactor(Width, Height);
+---
+> 				// ETERNAL BEGIN
+> 				//AndroidWindowUtils::ApplyContentScaleFactor(Width, Height);
+> 				// ETERNAL END
+
+diff -r \Engine\Source\Editor\UnrealEd\Private\Kismet2\DebuggerCommands#3.cpp \Engine\Source\Editor\UnrealEd\Private\Kismet2\DebuggerCommands@=360.cpp
+63,64c63,66
+< #include "IAndroidDeviceDetectionModule.h"
+< #include "IAndroidDeviceDetection.h"
+---
+> // ETERNAL BEGIN
+> //#include "IAndroidDeviceDetectionModule.h"
+> //#include "IAndroidDeviceDetection.h"
+> // ETERNAL END
+703,747c705,751
+< 	IAndroidDeviceDetection* DeviceDetection = FModuleManager::LoadModuleChecked<IAndroidDeviceDetectionModule>("AndroidDeviceDetection").GetAndroidDeviceDetection();
+< 
+< 	TMap<FString, FAndroidDeviceInfo> AndroidDeviceMap;
+< 
+< 	// lock device map and copy its contents
+< 	{
+< 		FCriticalSection* DeviceLock = DeviceDetection->GetDeviceMapLock();
+< 		FScopeLock Lock(DeviceLock);
+< 		AndroidDeviceMap = DeviceDetection->GetDeviceMap();
+< 	}
+< 
+< 	for (auto& Pair : AndroidDeviceMap)
+< 	{
+< 		FAndroidDeviceInfo& DeviceInfo = Pair.Value;
+< 
+< 		FString ModelName = DeviceInfo.Model + TEXT("[") + DeviceInfo.DeviceBrand + TEXT("]");
+< 
+< 		// lambda function called to open the save dialog and trigger device export
+< 		auto LambdaSaveConfigFile = [DeviceName = Pair.Key, DefaultFileName = ModelName, DeviceDetection]()
+< 		{
+< 			TArray<FString> OutputFileName;
+< 			FString DefaultFolder = FPaths::EngineContentDir() + TEXT("Editor/PIEPreviewDeviceSpecs/Android/");
+< 
+< 			bool bResult = FDesktopPlatformModule::Get()->SaveFileDialog(
+< 				FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr),
+< 				LOCTEXT("PackagePluginDialogTitle", "Save platform configuration...").ToString(),
+< 				DefaultFolder,
+< 				DefaultFileName,
+< 				TEXT("Json config file (*.json)|*.json"),
+< 				0,
+< 				OutputFileName);
+< 
+< 			if (bResult && OutputFileName.Num())
+< 			{
+< 				DeviceDetection->ExportDeviceProfile(OutputFileName[0], DeviceName);
+< 			}
+< 		};
+< 
+< 		InMenuBuilder.AddMenuEntry(
+< 			FText::FromString(ModelName),
+< 			FText(),
+< 			FSlateIcon(FEditorStyle::GetStyleSetName(), "AssetEditor.SaveAsset"),
+< 			FUIAction(FExecuteAction::CreateLambda(LambdaSaveConfigFile))
+< 		);
+< 	}
+---
+> 	// ETERNAL BEGIN
+> 	// IAndroidDeviceDetection* DeviceDetection = FModuleManager::LoadModuleChecked<IAndroidDeviceDetectionModule>("AndroidDeviceDetection").GetAndroidDeviceDetection();
+> 	//
+> 	// TMap<FString, FAndroidDeviceInfo> AndroidDeviceMap;
+> 	//
+> 	// // lock device map and copy its contents
+> 	// {
+> 	// 	FCriticalSection* DeviceLock = DeviceDetection->GetDeviceMapLock();
+> 	// 	FScopeLock Lock(DeviceLock);
+> 	// 	AndroidDeviceMap = DeviceDetection->GetDeviceMap();
+> 	// }
+> 	//
+> 	// for (auto& Pair : AndroidDeviceMap)
+> 	// {
+> 	// 	FAndroidDeviceInfo& DeviceInfo = Pair.Value;
+> 	//
+> 	// 	FString ModelName = DeviceInfo.Model + TEXT("[") + DeviceInfo.DeviceBrand + TEXT("]");
+> 	//
+> 	// 	// lambda function called to open the save dialog and trigger device export
+> 	// 	auto LambdaSaveConfigFile = [DeviceName = Pair.Key, DefaultFileName = ModelName, DeviceDetection]()
+> 	// 	{
+> 	// 		TArray<FString> OutputFileName;
+> 	// 		FString DefaultFolder = FPaths::EngineContentDir() + TEXT("Editor/PIEPreviewDeviceSpecs/Android/");
+> 	//
+> 	// 		bool bResult = FDesktopPlatformModule::Get()->SaveFileDialog(
+> 	// 			FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr),
+> 	// 			LOCTEXT("PackagePluginDialogTitle", "Save platform configuration...").ToString(),
+> 	// 			DefaultFolder,
+> 	// 			DefaultFileName,
+> 	// 			TEXT("Json config file (*.json)|*.json"),
+> 	// 			0,
+> 	// 			OutputFileName);
+> 	//
+> 	// 		if (bResult && OutputFileName.Num())
+> 	// 		{
+> 	// 			DeviceDetection->ExportDeviceProfile(OutputFileName[0], DeviceName);
+> 	// 		}
+> 	// 	};
+> 	//
+> 	// 	InMenuBuilder.AddMenuEntry(
+> 	// 		FText::FromString(ModelName),
+> 	// 		FText(),
+> 	// 		FSlateIcon(FEditorStyle::GetStyleSetName(), "AssetEditor.SaveAsset"),
+> 	// 		FUIAction(FExecuteAction::CreateLambda(LambdaSaveConfigFile))
+> 	// 	);
+> 	// }
+> 	// ETERNAL END
+788,792c792,798
+< 					IAndroidDeviceDetection* DeviceDetection = FModuleManager::LoadModuleChecked<IAndroidDeviceDetectionModule>("AndroidDeviceDetection").GetAndroidDeviceDetection();
+< 					FCriticalSection* DeviceLock = DeviceDetection->GetDeviceMapLock();
+< 
+< 					FScopeLock Lock(DeviceLock);
+< 					bHasAndroidDevices = DeviceDetection->GetDeviceMap().Num() > 0;
+---
+> 					// ETERNAL BEGIN
+> 					// IAndroidDeviceDetection* DeviceDetection = FModuleManager::LoadModuleChecked<IAndroidDeviceDetectionModule>("AndroidDeviceDetection").GetAndroidDeviceDetection();
+> 					// FCriticalSection* DeviceLock = DeviceDetection->GetDeviceMapLock();
+> 					//
+> 					// FScopeLock Lock(DeviceLock);
+> 					// bHasAndroidDevices = DeviceDetection->GetDeviceMap().Num() > 0;
+> 					// ETERNAL END
