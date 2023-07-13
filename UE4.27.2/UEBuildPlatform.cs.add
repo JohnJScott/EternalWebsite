@@ -1,0 +1,18 @@
+	// ETERNAL BEGIN
+	/// <summary>
+	/// A public accessor to the UEBuildPlatform class
+	/// </summary>
+	public class PublicUEBuildPlatform
+	{
+		/// <summary>
+		/// Checks to see if the platform has the support files and the correct SDK
+		/// </summary>
+		/// <param name="Platform"></param>
+		/// <returns></returns>
+		public static bool IsPlatformRegistered( UnrealTargetPlatform Platform )
+		{
+			return UEBuildPlatform.GetRegisteredPlatforms().Contains( Platform );
+		}
+	}
+	// ETERNAL END
+	
