@@ -1,5 +1,6 @@
 // Copyright Eternal Developments, LLC. All Rights Reserved.
 
+using System.Data.Entity.Core.Common.CommandTrees;
 using MusicDatabase;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -15,6 +16,7 @@ namespace WMAVisualizer
 			PopulateSeriesTracksByArtist();
 			PopulateSeriesSongCountByGenre();
 			PopulateSeriesBandsBySpecificGenre();
+			PopulateSeriesBandsByGenre();
 		}
 
 		private void PopulateSeriesSongCountByYear()
@@ -52,9 +54,13 @@ namespace WMAVisualizer
 					group genre by genre.GenreName;
 
 				Series series = MultiUseChart.Series.Add( "Song count by genre" );
+				series.ChartType = SeriesChartType.Pie;
 				foreach( IGrouping<string, Genre> genre_track in group_tracks_by_genre )
 				{
-					series.Points.AddXY( genre_track.Key, genre_track.Count() );
+					if( genre_track.Count() > 50 )
+					{
+						series.Points.AddXY( genre_track.Key, genre_track.Count() );
+					}
 				}
 			}
 
@@ -111,6 +117,42 @@ namespace WMAVisualizer
 			}
 
 			MultiUseChart.SaveImage( "TracksByArtist.png", ChartImageFormat.Png );
+		}
+
+		private void PopulateSeriesBandsByGenre()
+		{
+			MultiUseChart.Series.Clear();
+
+			using( MusicLibrary db = new MusicLibrary() )
+			{
+				// Create a list of pairs of GenreName and ArtistName
+				var genres_and_artist =
+					from artist in db.Artists
+					join track in db.Tracks on artist.ArtistId equals track.ArtistId
+					join genre in db.Genres on track.GenreId equals genre.GenreId
+					group artist.ArtistName by genre.GenreName;
+
+				// Count up the number of artists in each genre
+				var genres_by_artist =
+					from grouping in genres_and_artist
+					select new
+					{
+						GenreName = grouping.Key,
+						Artists = grouping.Distinct()
+					};
+
+				Series series = MultiUseChart.Series.Add( "Artist count by genre" );
+				series.ChartType = SeriesChartType.Pie;
+				foreach( var genre_artist in genres_by_artist )
+				{
+					if( genre_artist.Artists.Count() > 4 )
+					{
+						series.Points.AddXY( genre_artist.GenreName, genre_artist.Artists.Count() );
+					}
+				}
+			}
+
+			MultiUseChart.SaveImage( "BandsByGenre.png", ChartImageFormat.Png );
 		}
 	}
 }
